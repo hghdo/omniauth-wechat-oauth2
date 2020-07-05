@@ -17,7 +17,7 @@ module OmniAuth
       option :token_params, {parse: :json}
 
       def callback_url
-        full_host + script_name + callback_path
+        full_host + script_name + callback_path + query_string
       end
 
       uid do
