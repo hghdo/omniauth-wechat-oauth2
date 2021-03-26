@@ -2,8 +2,8 @@ require "omniauth-oauth2"
 
 module OmniAuth
   module Strategies
-    class Wechat < OmniAuth::Strategies::OAuth2
-      option :name, "wechat"
+    class WechatOpen < OmniAuth::Strategies::OAuth2
+      option :name, "wechat_open"
 
       option :client_options, {
         site:          "https://api.weixin.qq.com",
@@ -17,7 +17,7 @@ module OmniAuth
       option :token_params, {parse: :json}
 
       def callback_url
-        full_host + script_name + callback_path
+        full_host + script_name + callback_path + query_string
       end
 
       uid do
