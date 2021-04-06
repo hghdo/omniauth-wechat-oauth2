@@ -46,12 +46,6 @@ module OmniAuth
         {raw_info: raw_info}
       end
 
-      # def request_phase
-      #   params = client.auth_code.authorize_params.merge(authorize_params)
-      #   params["appid"] = params.delete("client_id")
-      #   params["redirect_uri"] = callback_url
-      #   redirect client.authorize_url(params)
-      # end
 
       def raw_info
         @raw_info ||= begin
@@ -63,19 +57,8 @@ module OmniAuth
                                  :oauth_consumer_key => options[:client_id],
                                  :access_token => access_token.token
                              }, :parse => :json).parsed
+        end
       end
-
-      # protected
-      # def build_access_token
-      #   params = {
-      #     'appid'        => client.id,
-      #     'secret'       => client.secret,
-      #     'code'         => request.params['code'],
-      #     'grant_type'   => 'authorization_code',
-      #     'redirect_uri' => callback_url
-      #     }.merge(token_params.to_hash(symbolize_keys: true))
-      #   client.get_token(params, deep_symbolize(options.auth_token_params))
-      # end
 
     end
   end
