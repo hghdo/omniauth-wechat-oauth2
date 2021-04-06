@@ -2,7 +2,7 @@ require "omniauth-oauth2"
 
 module OmniAuth
   module Strategies
-    class QQConnect < OmniAuth::Strategies::OAuth2
+    class QqConnect < OmniAuth::Strategies::OAuth2
       option :name, "qq_connect"
 
       option :client_options, {
