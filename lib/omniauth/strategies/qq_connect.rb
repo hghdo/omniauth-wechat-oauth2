@@ -6,8 +6,8 @@ module OmniAuth
       option :name, "qq_connect"
 
       option :client_options, {
-        :site => 'https://graph.qq.com/oauth2.0/',
-        :authorize_url => '/oauth2.0/authorize',
+        :site => 'https://graph.qq.com',
+        :authorize_url => 'https://graph.qq.com/oauth2.0/authorize',
         :token_url => "/oauth2.0/token",
         :token_formatter => lambda {|hash|
           hash[:expires_in] = hash['expires_in'].to_i
@@ -15,12 +15,20 @@ module OmniAuth
         }
       }
 
-      option :token_params, {
-        :state => 'foobar',
-        :parse => :query
-      }
+      option :token_params, {:parse => :query}
 
-      option :authorize_options, [:scope]
+      option :authorize_options, {scope: "get_user_info"}
+
+      def callback_url
+        full_host + script_name + callback_path + query_string
+      end
+
+      def request_phase
+        params = client.auth_code.authorize_params.merge(authorize_params)
+        params["client_id"] = params.delete("client_id")
+        params["redirect_uri"] = callback_url
+        redirect client.authorize_url(params)
+      end
 
       uid do
         @uid ||= begin
